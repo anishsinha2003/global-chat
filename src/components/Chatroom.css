@@ -1,0 +1,25 @@
+.App {
+    text-align: center;
+    background-image: url("./images/background.png");
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+}
+
+.input {
+width: 90%;
+margin-top: 90vh;
+height: 30px;
+font-size: 18px;
+background-color: #cce6ff;
+border: 0;
+border-radius: 10px;
+padding-left: 10px;
+}
+.button {
+height: 35px;
+width: 60px;
+position: relative;
+bottom: -5px;
+border-radius: 10px;
+}
