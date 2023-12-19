@@ -8,7 +8,6 @@ import 'firebase/compat/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-import logo from './images/logo.png'
 import googleLogo from './images/googleLogo.png'
 import githubLogo from './images/github-logo.png'
 import anonLogo from './images/anon-logo.png'
