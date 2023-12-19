@@ -32,7 +32,6 @@ firebase.initializeApp({
   messagingSenderId: "629728286026",
   appId: "1:629728286026:web:84c58bc6142515da59ddb3",
   measurementId: "G-1GJEFS6M9N"
-
 })
 
 const auth = firebase.auth();
