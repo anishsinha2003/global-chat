@@ -172,7 +172,6 @@ function SignIn() {
   return (
     <div className='sign-in-container'>
       <div className='stars'></div>
-      <img src={logo} className='logo' alt="logo"/>
       <div className='sign-in-item'>
         <span className='sign-in-title'>
           Welcome to Global Chat!
@@ -236,8 +235,7 @@ const Navbar = (props) => {
     <AppBar position="static" sx={{backgroundColor:"#A0D7ED",  boxShadow: "1px 5px 10px grey" }}>
       <Container maxWidth="xl">
         <Toolbar>
-          <img src={logo} className='logo-nav-bar' alt="logo-for-nav"/>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, justifyContent: 'center', display: { width: '20', xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
@@ -246,13 +244,12 @@ const Navbar = (props) => {
                   fontWeight: 600,
                   fontSize: 17,
                   color: 'black',
-                  display: 'block',
-                  position: 'relative',
-                  left: '-310px',
+                  textDecoration: 'none',
+                  justifyContent: 'center',
                     '&:hover': {
                       backgroundColor: '#15529D',
                       color: 'white',
-                    }
+                    },
                   }}
                   onClick={() => auth.signOut()}
               >
@@ -260,7 +257,6 @@ const Navbar = (props) => {
               </Button>
             ))}
           </Box>
-          <img src={props.photoURL} className='navbar-profile-photo' alt="profile"/>
         </Toolbar>
       </Container>
     </AppBar>

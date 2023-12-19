@@ -9,24 +9,29 @@
 }
 
 .input {
-  width: calc(100% - 30px);
+  width: calc(100% - 100px);
   margin-right: 00px;
   height: 60px;
   font-size: 21px;
-  position: relative;
-  bottom: -20px;
+  position: fixed;
+  bottom: 0;
+  /* bottom: -20px; */
   background-color: #cce6ff;
   border: 0;
   padding-left: 30px;
+  padding-bottom: 0px;
   cursor: text;
   z-index: 2;
 }
 .button {
-  height: 64px;
-  width: 60px;
-  position: relative;
-  bottom: -20px;
+  height: 62px;
+  width: 70px;
+  background-color: #81ea81;
+  position: fixed;
+  right: 0;
+  bottom: 0;
   cursor: pointer;
+  border: 0;
 
 }
 
@@ -92,7 +97,7 @@
   max-width: 600px;
   display: flex;
   justify-content: flex-start;
-  padding-left: 2%;
+  padding-left: 0%;
 }
 
 .message-left {
@@ -145,7 +150,7 @@
   max-width: 600px;
   display: flex;
   justify-content: flex-end;
-  padding-left: 70%;
+  padding-left: 80%;
 }
 
 .message-right {
@@ -287,17 +292,6 @@
 }
 .sign-in-button-anonymous:hover {
   opacity: 0.7;
-}
-
-
-.logo {
-  width: 120px;
-  height: 105px;
-  position: relative;
-  left: -700px;
-  top: -500px;
-  align-items:flex-start;
-  z-index: 2;
 }
 
 .google-logo {
