@@ -20,6 +20,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const pages = ['Sign Out'];
 
@@ -49,7 +50,7 @@ function App() {
 function Chatroom() {
 
   const messagesRef = firestore.collection('messages');
-  const query = messagesRef.orderBy('createdAt').limit(25);
+  const query = messagesRef.orderBy('createdAt').limit(2000);
   const [messages] = useCollectionData(query, {idField: 'id'});
 
   const [messageToSend, setMessageToSend] = useState("");
@@ -60,17 +61,29 @@ function Chatroom() {
     messageBoxScroll.scrollTop = messageBoxScroll.scrollHeight;
 
   }, [messages]);
+
+  function deleteMessage(id) {
+    messagesRef.where("id", "==", id).get()
+      .then(querySnapshot => {
+        querySnapshot.docs[0].ref.delete();
+      });
+  }
+
   // when message submit is clicked, this func is called
   const sendMessage = async(e) => {
     const uid = auth.currentUser.uid;
     const photoURL = auth.currentUser.photoURL;
+
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')} ${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}:${currentDate.getSeconds().toString().padStart(2, '0')}`;
+    const id = messageToSend + formattedDate + uid;
     // writes the new data (message) to the database
     await messagesRef.add({
       text: messageToSend,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
       photoURL,
-
+      id
     })
     setMessageToSend('');
 
@@ -79,7 +92,6 @@ function Chatroom() {
     messageBoxScroll.scrollTop = messageBoxScroll.scrollHeight;
   }
 
-  console.log(messages);
   // if person presses enter instead of submit button
   function handleEnter(event) {
     if (event.key === 'Enter') {
@@ -97,7 +109,7 @@ function Chatroom() {
         <div className='stars'></div>
         <Navbar photoURL={photoURL}/>
         <div className="all-messages-container" id='message-box'>
-          {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg}/>)}
+          {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} deleteMessage={deleteMessage}/>)}
         </div>
         <div className='message-send'>
           <input
@@ -117,7 +129,8 @@ function Chatroom() {
 function ChatMessage(props) {
   let userSentMessage = false;
 
-  let {text, uid, createdAt, photoURL} = props.message;
+  let {id, text, uid, createdAt, photoURL} = props.message;
+
   if (uid === auth.currentUser.uid) {
     userSentMessage = true;
   }
@@ -143,6 +156,8 @@ function ChatMessage(props) {
           message={text}
           timestamp={getTimeStampString(createdAt)}
           photoURL={photoURL}
+          id={id}
+          deleteMessage={props.deleteMessage}
         />
         <br/><br/>
       </>
@@ -211,8 +226,10 @@ const MessageLeft = (props) => {
 }
 
 const MessageRight = (props) => {
+  console.log(props.id);
   return (
     <div className='message-right-container'>
+      <DeleteIcon onClick={() => props.deleteMessage(props.id)}className='message-delete-right'/>
       <div className='message-right'>
         <p className='message-text-right'>
           {props.message}
